@@ -1,0 +1,38 @@
+name: X Daily Digest
+
+on:
+  schedule:
+    - cron: '0 14 * * *'  # UTC 14:00 = 北京时间 22:00
+  workflow_dispatch:       # 允许手动触发测试
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install openai requests
+
+      - name: Write config
+        run: |
+          cat > config.json << EOF
+          {
+            "accounts": ${{ secrets.ACCOUNTS }},
+            "getxapi_key": "${{ secrets.GETXAPI_KEY }}",
+            "api_base_url": "${{ secrets.API_BASE_URL }}",
+            "api_key": "${{ secrets.API_KEY }}",
+            "model": "${{ secrets.MODEL }}",
+            "smtp_user": "${{ secrets.SMTP_USER }}",
+            "smtp_password": "${{ secrets.SMTP_PASSWORD }}",
+            "to_email": "${{ secrets.TO_EMAIL }}"
+          }
+          EOF
+
+      - name: Run digest
+        run: python digest.py

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Mac 定时任务配置文件（launchd）
+  安装步骤：
+    1. 把本文件放到 ~/Library/LaunchAgents/com.x.digest.plist
+    2. 把下面的 /path/to/x_digest 改成你的实际路径
+    3. 把 /usr/local/bin/python3 改成你的 python 路径（用 which python3 查）
+    4. 执行：launchctl load ~/Library/LaunchAgents/com.x.digest.plist
+    5. 验证：launchctl list | grep x.digest
+-->
+<plist version="1.0">
+<dict>
+    <!-- 任务唯一标识符 -->
+    <key>Label</key>
+    <string>com.x.digest</string>
+
+    <!-- 执行命令：python3 digest.py -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/python3</string>
+        <string>/path/to/x_digest/digest.py</string>
+    </array>
+
+    <!-- 每晚 22:00 触发 -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>22</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <!-- 工作目录 -->
+    <key>WorkingDirectory</key>
+    <string>/path/to/x_digest</string>
+
+    <!-- 日志输出 -->
+    <key>StandardOutPath</key>
+    <string>/path/to/x_digest/logs/digest.log</string>
+    <key>StandardErrorPath</key>
+    <string>/path/to/x_digest/logs/digest_error.log</string>
+
+    <!-- 电脑睡眠期间错过的任务，唤醒后补跑一次 -->
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>

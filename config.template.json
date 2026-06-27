@@ -1,0 +1,19 @@
+{
+  "_comment": "把这个文件复制为 config.json，填入你的真实配置",
+
+  "accounts": [
+    "elonmusk",
+    "sama",
+    "garrytan"
+  ],
+
+  "getxapi_key": "你的_GETXAPI_KEY",
+
+  "api_base_url": "https://api.laozhang.ai/v1",
+  "api_key": "sk-你的中转Key",
+  "model": "claude-sonnet-4-6",
+
+  "smtp_user": "你的Gmail地址@gmail.com",
+  "smtp_password": "Gmail应用专用密码（16位）",
+  "to_email": "接收摘要的邮箱@example.com"
+}
